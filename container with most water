@@ -1,0 +1,19 @@
+    int maxArea(vector<int>& height) {
+        int j = height.size() - 1;
+        int i=0;
+        int minElement = 0;
+        int area = 0;
+        while(i < j) {
+            minElement = min(height[i],height[j]);
+            int currentArea = minElement*(j-i);
+            area = max(area, currentArea);
+
+            if (height[i] < height[j]) {
+                i++;
+            }
+            else{
+                j--;
+            }
+        }
+        return area;
+    }
