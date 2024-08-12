@@ -1,0 +1,48 @@
+ void gameOfLife(vector<vector<int>>& board) {
+        int m = board.size();
+        int n = board[0].size();
+
+        // Directions array for the eight neighbors
+        vector<vector<int>> directions = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1},
+                                          {0, 1},   {1, -1}, {1, 0},  {1, 1}};
+
+        // First pass: mark the cells with temporary states
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                int liveNeighbors = 0;
+
+                // Count live neighbors
+                for (auto dir : directions) {
+                    int x = i + dir[0];
+                    int y = j + dir[1];
+                    if (x >= 0 && x < m && y >= 0 && y < n &&
+                        abs(board[x][y]) == 1) {
+                        liveNeighbors++;
+                    }
+                }
+
+                // Apply the rules to determine the next state
+                if (board[i][j] == 1 &&
+                    (liveNeighbors < 2 || liveNeighbors > 3)) {
+                    // Live cell dies
+                    board[i][j] = -1;
+                }
+                if (board[i][j] == 0 && liveNeighbors == 3) {
+                    // Dead cell becomes alive
+                    board[i][j] = 2;
+                }
+            }
+        }
+
+        // Second pass: update the board to the final state
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (board[i][j] == -1) {
+                    board[i][j] = 0;
+                }
+                if (board[i][j] == 2) {
+                    board[i][j] = 1;
+                }
+            }
+        }
+    }
