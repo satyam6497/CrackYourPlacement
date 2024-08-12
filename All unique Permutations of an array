@@ -1,0 +1,13 @@
+    vector<vector<int>> uniquePerms(vector<int> &arr, int n) {
+        // Sort the array to ensure the permutations are generated in sorted order
+        sort(arr.begin(), arr.end());
+
+        vector<vector<int>> result;
+
+        // Generate all unique permutations using next_permutation
+        do {
+            result.push_back(arr);
+        } while (next_permutation(arr.begin(), arr.end()));
+
+        return result;
+    }
