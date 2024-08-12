@@ -1,0 +1,15 @@
+    int maxScore(vector<int>& cardPoints, int k) {
+       int leftSum = accumulate(cardPoints.begin(),cardPoints.begin() + k,0);
+       int maxSum = leftSum;
+       int rightSum = 0;
+       int rightIndex = cardPoints.size()-1;
+       for(int i=k-1; i>=0; i--)
+       {
+            leftSum -= cardPoints[i];
+            rightSum += cardPoints[rightIndex];
+            rightIndex--;
+            int currentSum = leftSum + rightSum;
+            maxSum = max(maxSum,currentSum);
+       }
+      return maxSum;
+    }
