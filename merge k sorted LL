@@ -1,0 +1,35 @@
+
+class Solution {
+public:
+    struct compare {
+        bool operator()(ListNode* a, ListNode* b) {
+            return a->val > b->val; // Min-heap based on value
+        }
+    };
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*, vector<ListNode*>, compare>
+            minHeap;
+
+        for (ListNode* list : lists) {
+            if (list != NULL) {
+                minHeap.push(list);
+            }
+        }
+
+        ListNode* dummy = new ListNode(-1);
+        ListNode* current = dummy;
+
+        while (!minHeap.empty()) {
+            ListNode* smallest = minHeap.top();
+            minHeap.pop();
+            current->next = smallest;
+            current = current->next;
+
+            if (smallest->next != NULL) {
+                minHeap.push(smallest->next);
+            }
+        }
+
+        return dummy->next;
+    }
+};
