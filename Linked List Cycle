@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool hasCycle(ListNode* head) {
+        if (!head || !head->next) {
+            return false; // If the list is empty or has only one node, no cycle
+                          // is possible
+        }
+
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        // Traverse the list with two pointers
+        while (fast != NULL && fast->next != NULL) {
+            slow = slow->next;       // Move slow pointer by 1 step
+            fast = fast->next->next; // Move fast pointer by 2 steps
+
+            // If the two pointers meet, there is a cycle
+            if (slow == fast) {
+                return true;
+            }
+        }
+
+        // If we reach here, there is no cycle
+        return false;
+    }
+};
