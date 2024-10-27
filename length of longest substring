@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char, int> mpp;
+        int maxLength = 0;
+        int start = 0;
+
+        for (int end = 0; end < s.length(); end++) {
+            char currentChar = s[end];
+
+            // If character is already in the window, move start pointer
+            if (mpp.find(currentChar) != mpp.end() &&
+                mpp[currentChar] >= start) {
+                start = mpp[currentChar] + 1;
+            }
+
+            // Update the last seen index of the character
+            mpp[currentChar] = end;
+
+            // Calculate the current window length and update max length
+            maxLength = max(maxLength, end - start + 1);
+        }
+        return maxLength;
+    }
+};
