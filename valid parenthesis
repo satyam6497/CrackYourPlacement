@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<int> stk;
+        unordered_map<char, char> mpp = {{')', '('}, {']', '['}, {'}', '{'}};
+
+        for (char c : s) {
+            if(mpp.count(c))
+            {
+                if(stk.empty() || stk.top() != mpp[c]){
+                    return false;
+                }
+                stk.pop();
+            }
+            else{
+                stk.push(c);
+            }
+        }
+        return stk.empty();
+    }
+};
