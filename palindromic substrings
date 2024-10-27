@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int countSubstrings(string s) {
+        vector<vector<bool>> dp(s.size(), vector<bool>(s.size(), false));
+        int count = 0;
+        int n = s.size();
+
+        // for single characters
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = true;
+            count++;
+        }
+
+        // for two length char
+        for (int i = 0; i < n - 1; i++) {
+            if (s[i] == s[i + 1]) {
+                dp[i][i + 1] = true;
+                count++;
+            }
+        }
+
+        // for 3 and above 3 length characters
+        for (int len = 3; len <= n; len++) {
+            for (int i = 0; i <= n - len; i++) {
+                int j = i + len - 1; // Endpoint of the substring
+                if (s[i] == s[j] && dp[i + 1][j - 1]) {
+                    dp[i][j] = true;
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+};
