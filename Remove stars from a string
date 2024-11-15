@@ -1,0 +1,21 @@
+class Solution {
+public:
+    string removeStars(string s) {
+        string ans; // Use a single string to store the result
+
+        // Iterate through the characters in the string
+        for (char c : s) {
+            if (c == '*') {
+                // If the character is '*', remove the last character from ans
+                if (!ans.empty()) {
+                    ans.pop_back();
+                }
+            } else {
+                // Otherwise, append the character to ans
+                ans.push_back(c);
+            }
+        }
+
+        return ans;
+    }
+};
