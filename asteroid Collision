@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        vector<int> ans; // To store the surviving asteroids
+
+        for (int element : asteroids) {
+            bool destroyed =
+                false; // Reset destroyed flag for each new asteroid
+
+            // Process potential collisions only if element is moving left and
+            // top of stack is moving right
+            while (!ans.empty() && element < 0 && ans.back() > 0) {
+                if (abs(element) == abs(ans.back())) {
+                    // If both asteroids are equal in size, both are destroyed
+                    ans.pop_back();
+                    destroyed = true;
+                    break;
+                } else if (abs(element) > abs(ans.back())) {
+                    // If current asteroid is larger, it destroys the one on top
+                    // of the stack
+                    ans.pop_back();
+                } else {
+                    // If the current asteroid is smaller, it is destroyed
+                    destroyed = true;
+                    break;
+                }
+            }
+
+            // If asteroid is not destroyed, add it to the stack
+            if (!destroyed) {
+                ans.push_back(element);
+            }
+        }
+
+        return ans;
+    }
+};
