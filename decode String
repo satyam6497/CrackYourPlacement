@@ -1,0 +1,42 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<int> countNumber;  // Stack to store repeat counts
+        stack<string> variables; // Stack to store previous string contexts
+        int currentNum = 0;      // To handle multi-digit numbers
+        string currentStr = "";  // To build the current string
+
+        for (char c : s) {
+            if (isdigit(c)) {
+                // Build the number (k) that indicates how many times to repeat
+                currentNum = currentNum * 10 + (c - '0');
+            } else if (c == '[') {
+                // Push the current repeat count and string context to the stack
+                countNumber.push(currentNum);
+                variables.push(currentStr);
+
+                // Reset currentNum and currentStr for the next context
+                currentNum = 0;
+                currentStr = "";
+            } else if (c == ']') {
+                // Pop the repeat count and previous string context
+                int repeatCount = countNumber.top();
+                countNumber.pop();
+                string previousString = variables.top();
+                variables.pop();
+
+                // Repeat the current string the given number of times
+                string temp = "";
+                for (int i = 0; i < repeatCount; ++i) {
+                    temp += currentStr;
+                }
+                currentStr = previousString + temp;
+            } else {
+                // Append regular characters to the current string
+                currentStr += c;
+            }
+        }
+
+        return currentStr;
+    }
+};
