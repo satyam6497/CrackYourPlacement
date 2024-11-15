@@ -1,0 +1,37 @@
+class Solution {
+public:
+    string predictPartyVictory(string senate) {
+        queue<int> radiant, dire;
+        int n = senate.size();
+
+        // Populate the queues with the indices of Radiant and Dire senators
+        for (int i = 0; i < n; ++i) {
+            if (senate[i] == 'R') {
+                radiant.push(i);
+            } else {
+                dire.push(i);
+            }
+        }
+
+        // Simulate the rounds
+        while (!radiant.empty() && !dire.empty()) {
+            int radiantIndex = radiant.front();
+            int direIndex = dire.front();
+            radiant.pop();
+            dire.pop();
+
+            // The senator with the lower index bans the other and gets back to
+            // the end of the queue
+            if (radiantIndex < direIndex) {
+                radiant.push(radiantIndex +
+                             n); // Add the senator back with updated index
+            } else {
+                dire.push(direIndex +
+                          n); // Add the senator back with updated index
+            }
+        }
+
+        // If one of the queues is empty, the other party wins
+        return radiant.empty() ? "Dire" : "Radiant";
+    }
+};
